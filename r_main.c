@@ -23,7 +23,7 @@
 * Device(s)    : R5F1096C
 * Tool-Chain   : CCRL
 * Description  : This file implements main function.
-* Creation Date: 2018/6/21
+* Creation Date: 2018/7/9
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -32,10 +32,20 @@ Includes
 #include "r_cg_macrodriver.h"
 #include "r_cg_cgc.h"
 #include "r_cg_port.h"
+#include "r_cg_serial.h"
+#include "r_cg_adc.h"
 #include "r_cg_timer.h"
-#include "r_cg_wdt.h"
 /* Start user code for include. Do not edit comment generated here */
 #include "sys.h"
+#include "m_key.h"
+#include "task.h"
+#define TJA1021_SLEEP()  {P1_bit.no6 = 0U;}
+#define TJA1021_NOT_SLEEP() {P1_bit.no6 = 1U;}
+
+#define TJA1021_WAKE() {P1_bit.no1 = 0U;}
+#define TJA1021_NOT_WAKE() {P1_bit.no1 = 1U;}
+
+#define R_WDT_Restart() NOP()
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
 
@@ -43,12 +53,16 @@ Includes
 Pragma directive
 ***********************************************************************************************************************/
 /* Start user code for pragma. Do not edit comment generated here */
+uint16_t count;
+
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
 Global variables and functions
 ***********************************************************************************************************************/
 /* Start user code for global. Do not edit comment generated here */
+
+
 /* End user code. Do not edit comment generated here */
 void R_MAIN_UserInit(void);
 
@@ -63,17 +77,23 @@ void main(void)
     R_MAIN_UserInit();
     /* Start user code. Do not edit comment generated here */
     R_TAU0_Channel0_Start();
+    R_UARTF0_Start();
+    
+    TJA1021_NOT_SLEEP();    
+    TJA1021_WAKE();
 
-    sys_add_task(test_task,TASK_5MS,TASK_5MS);
+    R_UARTF0_Start();
+    R_ADC_Set_OperationOn();
+    /* ---- stabilization wait time(about 1us) ---- */
+    for (count = 0U; count < 3U; count++)
+    {
+        NOP();
+    }
+    R_ADC_Start();
+    sys_add_task(test_task,TASK_20MS,TASK_20MS);
     while (1U)
     {
-	R_WDT_Restart();
-	sys_run_task();
-    // if(IS_TIME_OUT(INTERVAL,100))
-	// {
-	//     CLR_TIME_OUT(INTERVAL);
-	//     P1_bit.no0 = !P1_bit.no0;
-	// }
+        sys_run_task();
     }
     /* End user code. Do not edit comment generated here */
 }

@@ -23,7 +23,7 @@
 * Device(s)    : R5F1096C
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for TAU module.
-* Creation Date: 2018/6/21
+* Creation Date: 2018/7/9
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -58,7 +58,7 @@ Global variables and functions
 static void __near r_tau0_channel0_interrupt(void)
 {
     /* Start user code. Do not edit comment generated here */
-    set_sys_time();
+    inc_sys_time();
     sys_task_update();
     //test_pin();
     TMIF00 = 0u;

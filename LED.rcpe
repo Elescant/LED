@@ -17,22 +17,31 @@
         <Path>r_cg_cgc_user.c</Path>
         <Path>r_cg_timer.c</Path>
         <Path>r_cg_timer_user.c</Path>
-        <Path>r_cg_wdt.c</Path>
-        <Path>r_cg_wdt_user.c</Path>
         <Path>r_cg_macrodriver.h</Path>
         <Path>r_cg_userdefine.h</Path>
         <Path>r_cg_cgc.h</Path>
         <Path>r_cg_timer.h</Path>
-        <Path>r_cg_wdt.h</Path>
         <Path>r_cg_port.c</Path>
         <Path>r_cg_port_user.c</Path>
         <Path>r_cg_port.h</Path>
+        <Path>r_cg_serial.c</Path>
+        <Path>r_cg_serial_user.c</Path>
+        <Path>r_cg_serial.h</Path>
+        <Path>r_cg_adc.c</Path>
+        <Path>r_cg_adc_user.c</Path>
+        <Path>r_cg_adc.h</Path>
       </Category>
       <Category Name="Src">
         <Path>sys.c</Path>
+        <Path>lin_bus.c</Path>
+        <Path>lin_driver.c</Path>
+        <Path>m_key.c</Path>
       </Category>
       <Category Name="Inc">
         <Path>sys.h</Path>
+        <Path>lin_bus.h</Path>
+        <Path>lin_driver.h</Path>
+        <Path>m_key.h</Path>
       </Category>
     </Files>
     <Device Series="RL78">R5F1096C</Device>
@@ -47,11 +56,16 @@
           <Path>DefaultBuild\r_cg_cgc_user.obj</Path>
           <Path>DefaultBuild\r_cg_timer.obj</Path>
           <Path>DefaultBuild\r_cg_timer_user.obj</Path>
-          <Path>DefaultBuild\r_cg_wdt.obj</Path>
-          <Path>DefaultBuild\r_cg_wdt_user.obj</Path>
           <Path>DefaultBuild\r_cg_port.obj</Path>
           <Path>DefaultBuild\r_cg_port_user.obj</Path>
           <Path>DefaultBuild\sys.obj</Path>
+          <Path>DefaultBuild\r_cg_serial.obj</Path>
+          <Path>DefaultBuild\r_cg_serial_user.obj</Path>
+          <Path>DefaultBuild\lin_bus.obj</Path>
+          <Path>DefaultBuild\lin_driver.obj</Path>
+          <Path>DefaultBuild\r_cg_adc.obj</Path>
+          <Path>DefaultBuild\r_cg_adc_user.obj</Path>
+          <Path>DefaultBuild\m_key.obj</Path>
         </LinkOrder>
         <CommonOptions>
           <IncludePathForC>.</IncludePathForC>
@@ -85,9 +99,9 @@
           <Option>-LIBrary=%MicomToolPath%\CC-RL\V1.06.00\lib\rl78cm4s.lib</Option>
           <Option>-LIBrary=%MicomToolPath%\CC-RL\V1.06.00\lib\malloc_n.lib</Option>
           <Option>-LIBrary=%MicomToolPath%\CC-RL\V1.06.00\lib\rl78cm4r.lib</Option>
-          <Option>-OCDBG=84</Option>
+          <Option>-OCDBG=04</Option>
           <Option>-DEBUG_MONITOR</Option>
-          <Option>-USER_OPT_BYTE=1EFFE8</Option>
+          <Option>-USER_OPT_BYTE=EFFFE8</Option>
           <Option>-LISt=%BuildModeName%\%ProjectName%.map</Option>
           <Option>-AUTO_SECTION_LAYOUT</Option>
           <Option>-ROm=.data=.dataR</Option>
@@ -226,7 +240,7 @@
     &lt;StartAddressOfOnChipDebugOptionBytes Name="GOStart" Text="7E00" /&gt;
     &lt;SizeOfOnChipDebugOptionBytesArea Name="GOSizeValue" Text="512" /&gt;
     &lt;UserOptionBytes Name="GB" Text="1" /&gt;
-    &lt;UserOptionBytesValue Name="GBValue" Text="FFFFE8" /&gt;
+    &lt;UserOptionBytesValue Name="GBValue" Text="EFFFE8" /&gt;
     &lt;RAMStartAddress Chip="R5F1096C,R5F109AC,R5F109BC,R5F109GC,R5F109LC" Name="RAMStartAddress" Fixed="" Text="000FF700" /&gt;
     &lt;RAMEndAddress Name="RAMEndAddress" Fixed="" Text="000FFEFF" /&gt;
     &lt;ROMEndAddress Chip="R5F1096C,R5F109AC,R5F109BC,R5F109GC,R5F109LC" Name="ROMEndAddress" Fixed="" Text="00007FFF" /&gt;
@@ -244,6 +258,8 @@
     &lt;TO02_PWM Name="TO02_PWM" Text="false" /&gt;
     &lt;TO03_PWM Name="TO03_PWM" Text="false" /&gt;
     &lt;LinkFileName Name="LinkFileName" Text="" /&gt;
+    &lt;AD_ADPC_USEDPIN Name="AD_ADPC_USEDPIN" Text="ANI0,ANI1,ANI2," /&gt;
+    &lt;ADC_ADS_VALUE Name="ADC_ADS_VALUE" Text="ANI0," /&gt;
   &lt;/VAR&gt;
   &lt;DIR&gt;
     &lt;PIN&gt;
@@ -259,15 +275,15 @@
         &lt;/Port0&gt;
         &lt;Port1 Chip="RL78F12_20pin" Pullup="true"&gt;
           &lt;P10 Name="P10/SCK00/SCKS0/SCL00" TTL="true" Nch="true" AltFunc="P10" Point="I/O" /&gt;
-          &lt;P11 Name="P11/SI00/RxD0/SIS0/RxDS0/TOOLRxD/SDA00" TTL="true" Nch="true" AltFunc="" Point="I/O" /&gt;
+          &lt;P11 Name="P11/SI00/RxD0/SIS0/RxDS0/TOOLRxD/SDA00" TTL="true" Nch="true" AltFunc="P11" Point="I/O" /&gt;
           &lt;P12 Name="P12/SO00/TxD0/SOS0/TxDS0/TOOLTxD" Nch="true" AltFunc="" Point="I/O" /&gt;
-          &lt;P16 Name="P16/TI01/TO01/INTP5" TTL="true" AltFunc="" Point="I/O" /&gt;
+          &lt;P16 Name="P16/TI01/TO01/INTP5" TTL="true" AltFunc="P16" Point="I/O" /&gt;
           &lt;P17 Name="P17/TI02/TO02" TTL="true" Nch="true" AltFunc="" Point="I/O" /&gt;
         &lt;/Port1&gt;
         &lt;Port2 Chip="RL78F12_20pin" ADIN="true"&gt;
-          &lt;P20 Name="P20/ANI0/AVREFP" AltFunc="" Point="I/O" /&gt;
-          &lt;P21 Name="P21/ANI1/AVREFM" AltFunc="" Point="I/O" /&gt;
-          &lt;P22 Name="P22/ANI2" AltFunc="" Point="I/O" /&gt;
+          &lt;P20 Name="P20/ANI0/AVREFP" AltFunc="ANI0" Point="I/O" /&gt;
+          &lt;P21 Name="P21/ANI1/AVREFM" AltFunc="ANI1/AVREFM" Point="I/O" /&gt;
+          &lt;P22 Name="P22/ANI2" AltFunc="ANI2" Point="I/O" /&gt;
         &lt;/Port2&gt;
         &lt;Port3 Chip="RL78F12_20pin" Pullup="true"&gt;
           &lt;P31 Name="P31/TI03/TO03/INTP4/PCLBUZ0" AltFunc="" Point="I/O" /&gt;
@@ -276,8 +292,8 @@
           &lt;P40 Name="P40/TOOL0" AltFunc="" Point="I/O" /&gt;
         &lt;/Port4&gt;
         &lt;Port5 Chip="RL78F12_20pin" Pullup="true"&gt;
-          &lt;P50 Name="P50/INTP1/LRxD0" Nch="true" AltFunc="" Point="I/O" /&gt;
-          &lt;P51 Name="P51/INTP2/LTxD0" AltFunc="" Point="I/O" /&gt;
+          &lt;P50 Name="P50/INTP1/LRxD0" Nch="true" AltFunc="LRxD0" Point="I/O" /&gt;
+          &lt;P51 Name="P51/INTP2/LTxD0" AltFunc="LTxD0" Point="I/O" /&gt;
         &lt;/Port5&gt;
         &lt;Port12 Chip="RL78F12_20pin"&gt;
           &lt;P121 Name="P121/X1" AltFunc="" Point="I" /&gt;
@@ -419,15 +435,15 @@
           &lt;INTSRES0 InUse="0" ISR="r_uarts0_interrupt_error" /&gt;
         &lt;/SAUS&gt;
         &lt;UARTF0&gt;
-          &lt;INTLR InUse="0" ISR="r_uartf0_interrupt_receive" /&gt;
-          &lt;INTLT InUse="0" ISR="r_uartf0_interrupt_send" /&gt;
-          &lt;INTLS InUse="0" ISR="r_uartf0_interrupt_error" /&gt;
+          &lt;INTLR InUse="1" ISR="r_uartf0_interrupt_receive" /&gt;
+          &lt;INTLT InUse="1" ISR="r_uartf0_interrupt_send" /&gt;
+          &lt;INTLS InUse="1" ISR="r_uartf0_interrupt_error" /&gt;
         &lt;/UARTF0&gt;
         &lt;IICA0&gt;
         &lt;/IICA0&gt;
       &lt;/Serial&gt;
       &lt;ADC&gt;
-        &lt;INTAD InUse="0" ISR="r_adc_interrupt" IsDMATrigger="true" /&gt;
+        &lt;INTAD InUse="1" ISR="r_adc_interrupt" IsDMATrigger="true" /&gt;
       &lt;/ADC&gt;
       &lt;TAU&gt;
         &lt;TAU0&gt;
@@ -477,7 +493,7 @@
         &lt;/DMA1&gt;
       &lt;/DMAC&gt;
       &lt;WDT&gt;
-        &lt;INTWDTI InUse="1" ISR="r_wdt_interrupt" /&gt;
+        &lt;INTWDTI InUse="0" ISR="r_wdt_interrupt" /&gt;
       &lt;/WDT&gt;
       &lt;LVD&gt;
         &lt;INTLVI InUse="0" ISR="r_lvd_interrupt" IsDMATrigger="true" /&gt;
@@ -590,154 +606,154 @@
         &lt;r_cg_intc.h UserName="r_cg_intc.h" LibName=".h" InUse="" /&gt;
       &lt;/INTC&gt;
       &lt;Serial&gt;
-        &lt;r_cg_serial.c UserName="r_cg_serial.c" LibName=".c" InUse=""&gt;
+        &lt;r_cg_serial.c UserName="r_cg_serial.c" LibName=".c" InUse="1"&gt;
           &lt;Type R_SAUn_Create="void R_SAUn_Create(void)" R_SAUn_Set_PowerOff="void R_SAUn_Set_PowerOff(void)" R_SAUn_Set_SnoozeOn="void R_SAUn_Set_SnoozeOn(void)" R_SAUn_Set_SnoozeOff="void R_SAUn_Set_SnoozeOff(void)" R_UARTn_Create="void R_UARTn_Create(void)" R_UARTn_Send="MD_STATUS R_UARTn_Send(uint8_t const * tx_buf, uint16_t tx_num)" R_UARTn_Receive="MD_STATUS R_UARTn_Receive(uint8_t const * rx_buf, uint16_t rx_num)" R_UARTn_Start="void R_UARTn_Start(void)" R_UARTn_Stop="void R_UARTn_Stop(void)" R_CSIn_Create="void R_CSIn_Create(void)" R_CSIn_Send="MD_STATUS R_CSIn_Send(uint8_t const * tx_buf, uint16_t tx_num)" R_CSIn_Receive="MD_STATUS R_CSIn_Receive(uint8_t const * rx_buf, uint16_t rx_num) " R_CSIn_Send_Receive="MD_STATUS R_CSIn_Send_Receive(uint8_t const * tx_buf, uint16_t tx_num, uint8_t const * rx_buf) " R_CSIn_Start="void R_CSIn_Start(void)" R_CSIn_Stop="void R_CSIn_Stop(void)" R_IICn_Create="void R_IICn_Create(void)" R_IICn_Master_Send="void R_IICn_Master_Send(uint8_t adr, uint8_t const * tx_buf, uint16_t txnum)" R_IICn_Master_Receive="void R_IICn_Master_Receive(uint8_t adr, uint8_t const * rx_buf, uint16_t rx_num) " R_IICn_Stop="void R_IICn_Stop(void)" R_IICn_StartCondition="void R_IICn_StartCondition(void)" R_IICn_StopCondition="void R_IICn_StopCondition(void)" R_UARTFn_Create="void R_UARTFn_Create(void)" R_UARTFn_Send="MD_STATUS R_UARTFn_Send(uint8_t * const tx_buf, uint16_t tx_num)" R_UARTFn_Receive="MD_STATUS R_UARTFn_Receive(uint8_t * const rx_buf, uint16_t rx_num)" R_UARTFn_Set_ComparisonData="void R_UARTFn_Set_ComparisonData(uint16_t com_data)" R_UARTFn_Set_DataComparisonOn="void R_UARTFn_Set_DataComparisonOn(void)" R_UARTFn_Set_DataComparisonOff="void R_UARTFn_Set_DataComparisonOff(void)" R_UARTFn_Set_PowerOff="void R_UARTFn_Set_PowerOff(void)" R_IICAn_Create="void R_IICAn_Create(void)" R_IICAn_Master_Send="MD_STATUS R_IICAn_Master_Send(uint8_t adr, uint8_t * const tx_buf, uint16_t tx_num, uint8_t wait)" R_IICAn_Master_Receive="MD_STATUS R_IICAn_Master_Receive(uint8_t adr, uint8_t * const rx_buf, uint16_t rx_num, uint8_t wait)" R_IICAn_Slave_Send="void R_IICAn_Slave_Send(uint8_t * const tx_buf, uint16_t tx_num)" R_IICAn_Slave_Receive="void R_IICAn_Slave_Receive(uint8_t * const rx_buf, uint16_t rx_num)" R_IICAn_Stop="void R_IICAn_Stop(void)" R_IICAn_StopCondition="void R_IICAn_StopCondition(void)" R_IICAn_Set_SnoozeOn="void R_IICAn_Set_SnoozeOn(void)" R_IICAn_Set_SnoozeOff="void R_IICAn_Set_SnoozeOff(void)" R_IICAn_Set_PowerOff="void R_IICAn_Set_PowerOff(void)" /&gt;
           &lt;SAU0 InUse=""&gt;
-            &lt;R_SAU0_Create UserName="R_SAU0_Create" LibName="R_SAUn_Create" InUse="" Init="1" InitMode="" /&gt;
-            &lt;R_SAU0_Set_PowerOff UserName="R_SAU0_Set_PowerOff" LibName="R_SAUn_Set_PowerOff" InUse="" /&gt;
-            &lt;R_SAU0_Set_SnoozeOn UserName="R_SAU0_Set_SnoozeOn" LibName="R_SAUn_Set_SnoozeOn" InUse="" /&gt;
-            &lt;R_SAU0_Set_SnoozeOff UserName="R_SAU0_Set_SnoozeOff" LibName="R_SAUn_Set_SnoozeOff" InUse="" /&gt;
+            &lt;R_SAU0_Create UserName="R_SAU0_Create" LibName="R_SAUn_Create" InUse="0" Init="1" InitMode="" /&gt;
+            &lt;R_SAU0_Set_PowerOff UserName="R_SAU0_Set_PowerOff" LibName="R_SAUn_Set_PowerOff" InUse="0" /&gt;
+            &lt;R_SAU0_Set_SnoozeOn UserName="R_SAU0_Set_SnoozeOn" LibName="R_SAUn_Set_SnoozeOn" InUse="0" /&gt;
+            &lt;R_SAU0_Set_SnoozeOff UserName="R_SAU0_Set_SnoozeOff" LibName="R_SAUn_Set_SnoozeOff" InUse="0" /&gt;
             &lt;UART0 InUse=""&gt;
-              &lt;R_UART0_Create UserName="R_UART0_Create" LibName="R_UARTn_Create" InUse="" InitMode="" /&gt;
-              &lt;R_UART0_Start UserName="R_UART0_Start" LibName="R_UARTn_Start" InUse="" /&gt;
-              &lt;R_UART0_Stop UserName="R_UART0_Stop" LibName="R_UARTn_Stop" InUse="" /&gt;
-              &lt;R_UART0_Send UserName="R_UART0_Send" LibName="R_UARTn_Send" InUse="" /&gt;
-              &lt;R_UART0_Receive UserName="R_UART0_Receive" LibName="R_UARTn_Receive" InUse="" /&gt;
+              &lt;R_UART0_Create UserName="R_UART0_Create" LibName="R_UARTn_Create" InUse="0" InitMode="" /&gt;
+              &lt;R_UART0_Start UserName="R_UART0_Start" LibName="R_UARTn_Start" InUse="0" /&gt;
+              &lt;R_UART0_Stop UserName="R_UART0_Stop" LibName="R_UARTn_Stop" InUse="0" /&gt;
+              &lt;R_UART0_Send UserName="R_UART0_Send" LibName="R_UARTn_Send" InUse="0" /&gt;
+              &lt;R_UART0_Receive UserName="R_UART0_Receive" LibName="R_UARTn_Receive" InUse="0" /&gt;
             &lt;/UART0&gt;
             &lt;CSI00 Chip="RL78F12_20pin,RL78F12_30pin,RL78F12_32pin,RL78F12_48pin,RL78F12_64pin" InUse="" PIOR1="0"&gt;
-              &lt;R_CSI00_Create UserName="R_CSI00_Create" LibName="R_CSIn_Create" InUse="" InitMode="" /&gt;
-              &lt;R_CSI00_Start UserName="R_CSI00_Start" LibName="R_CSIn_Start" InUse="" /&gt;
-              &lt;R_CSI00_Stop UserName="R_CSI00_Stop" LibName="R_CSIn_Stop" InUse="" /&gt;
-              &lt;R_CSI00_Send UserName="R_CSI00_Send" LibName="R_CSIn_Send" InUse="" /&gt;
-              &lt;R_CSI00_Receive UserName="R_CSI00_Receive" LibName="R_CSIn_Receive" InUse="" /&gt;
-              &lt;R_CSI00_Send_Receive UserName="R_CSI00_Send_Receive" LibName="R_CSIn_Send_Receive" InUse="" /&gt;
+              &lt;R_CSI00_Create UserName="R_CSI00_Create" LibName="R_CSIn_Create" InUse="0" InitMode="" /&gt;
+              &lt;R_CSI00_Start UserName="R_CSI00_Start" LibName="R_CSIn_Start" InUse="0" /&gt;
+              &lt;R_CSI00_Stop UserName="R_CSI00_Stop" LibName="R_CSIn_Stop" InUse="0" /&gt;
+              &lt;R_CSI00_Send UserName="R_CSI00_Send" LibName="R_CSIn_Send" InUse="0" /&gt;
+              &lt;R_CSI00_Receive UserName="R_CSI00_Receive" LibName="R_CSIn_Receive" InUse="0" /&gt;
+              &lt;R_CSI00_Send_Receive UserName="R_CSI00_Send_Receive" LibName="R_CSIn_Send_Receive" InUse="0" /&gt;
             &lt;/CSI00&gt;
             &lt;IIC00 InUse="" PIOR1="0"&gt;
-              &lt;R_IIC00_Create UserName="R_IIC00_Create" LibName="R_IICn_Create" InUse="" InitMode="" /&gt;
-              &lt;R_IIC00_Master_Send UserName="R_IIC00_Master_Send" LibName="R_IICn_Master_Send" InUse="" /&gt;
-              &lt;R_IIC00_Master_Receive UserName="R_IIC00_Master_Receive" LibName="R_IICn_Master_Receive" InUse="" /&gt;
-              &lt;R_IIC00_Stop UserName="R_IIC00_Stop" LibName="R_IICn_Stop" InUse="" /&gt;
-              &lt;R_IIC00_StartCondition UserName="R_IIC00_StartCondition" LibName="R_IICn_StartCondition" InUse="" /&gt;
-              &lt;R_IIC00_StopCondition UserName="R_IIC00_StopCondition" LibName="R_IICn_StopCondition" InUse="" /&gt;
+              &lt;R_IIC00_Create UserName="R_IIC00_Create" LibName="R_IICn_Create" InUse="0" InitMode="" /&gt;
+              &lt;R_IIC00_Master_Send UserName="R_IIC00_Master_Send" LibName="R_IICn_Master_Send" InUse="0" /&gt;
+              &lt;R_IIC00_Master_Receive UserName="R_IIC00_Master_Receive" LibName="R_IICn_Master_Receive" InUse="0" /&gt;
+              &lt;R_IIC00_Stop UserName="R_IIC00_Stop" LibName="R_IICn_Stop" InUse="0" /&gt;
+              &lt;R_IIC00_StartCondition UserName="R_IIC00_StartCondition" LibName="R_IICn_StartCondition" InUse="0" /&gt;
+              &lt;R_IIC00_StopCondition UserName="R_IIC00_StopCondition" LibName="R_IICn_StopCondition" InUse="0" /&gt;
             &lt;/IIC00&gt;
           &lt;/SAU0&gt;
           &lt;SAUS InUse=""&gt;
-            &lt;R_SAUS_Create UserName="R_SAUS_Create" LibName="R_SAUn_Create" InUse="" Init="1" InitMode="" /&gt;
-            &lt;R_SAUS_Set_PowerOff UserName="R_SAUS_Set_PowerOff" LibName="R_SAUn_Set_PowerOff" InUse="" /&gt;
+            &lt;R_SAUS_Create UserName="R_SAUS_Create" LibName="R_SAUn_Create" InUse="0" Init="1" InitMode="" /&gt;
+            &lt;R_SAUS_Set_PowerOff UserName="R_SAUS_Set_PowerOff" LibName="R_SAUn_Set_PowerOff" InUse="0" /&gt;
             &lt;UARTS0 InUse=""&gt;
-              &lt;R_UARTS0_Create UserName="R_UARTS0_Create" LibName="R_UARTn_Create" InUse="" InitMode="" /&gt;
-              &lt;R_UARTS0_Start UserName="R_UARTS0_Start" LibName="R_UARTn_Start" InUse="" /&gt;
-              &lt;R_UARTS0_Stop UserName="R_UARTS0_Stop" LibName="R_UARTn_Stop" InUse="" /&gt;
-              &lt;R_UARTS0_Send UserName="R_UARTS0_Send" LibName="R_UARTn_Send" InUse="" /&gt;
-              &lt;R_UARTS0_Receive UserName="R_UARTS0_Receive" LibName="R_UARTn_Receive" InUse="" /&gt;
+              &lt;R_UARTS0_Create UserName="R_UARTS0_Create" LibName="R_UARTn_Create" InUse="0" InitMode="" /&gt;
+              &lt;R_UARTS0_Start UserName="R_UARTS0_Start" LibName="R_UARTn_Start" InUse="0" /&gt;
+              &lt;R_UARTS0_Stop UserName="R_UARTS0_Stop" LibName="R_UARTn_Stop" InUse="0" /&gt;
+              &lt;R_UARTS0_Send UserName="R_UARTS0_Send" LibName="R_UARTn_Send" InUse="0" /&gt;
+              &lt;R_UARTS0_Receive UserName="R_UARTS0_Receive" LibName="R_UARTn_Receive" InUse="0" /&gt;
             &lt;/UARTS0&gt;
             &lt;CSIS0 InUse=""&gt;
-              &lt;R_CSIS0_Create UserName="R_CSIS0_Create" LibName="R_CSIn_Create" InUse="" InitMode="" /&gt;
-              &lt;R_CSIS0_Start UserName="R_CSIS0_Start" LibName="R_CSIn_Start" InUse="" /&gt;
-              &lt;R_CSIS0_Stop UserName="R_CSIS0_Stop" LibName="R_CSIn_Stop" InUse="" /&gt;
-              &lt;R_CSIS0_Send UserName="R_CSIS0_Send" LibName="R_CSIn_Send" InUse="" /&gt;
-              &lt;R_CSIS0_Receive UserName="R_CSIS0_Receive" LibName="R_CSIn_Receive" InUse="" /&gt;
-              &lt;R_CSIS0_Send_Receive UserName="R_CSIS0_Send_Receive" LibName="R_CSIn_Send_Receive" InUse="" /&gt;
+              &lt;R_CSIS0_Create UserName="R_CSIS0_Create" LibName="R_CSIn_Create" InUse="0" InitMode="" /&gt;
+              &lt;R_CSIS0_Start UserName="R_CSIS0_Start" LibName="R_CSIn_Start" InUse="0" /&gt;
+              &lt;R_CSIS0_Stop UserName="R_CSIS0_Stop" LibName="R_CSIn_Stop" InUse="0" /&gt;
+              &lt;R_CSIS0_Send UserName="R_CSIS0_Send" LibName="R_CSIn_Send" InUse="0" /&gt;
+              &lt;R_CSIS0_Receive UserName="R_CSIS0_Receive" LibName="R_CSIn_Receive" InUse="0" /&gt;
+              &lt;R_CSIS0_Send_Receive UserName="R_CSIS0_Send_Receive" LibName="R_CSIn_Send_Receive" InUse="0" /&gt;
             &lt;/CSIS0&gt;
           &lt;/SAUS&gt;
           &lt;UARTF0 InUse=""&gt;
-            &lt;R_UARTF0_Create UserName="R_UARTF0_Create" LibName="R_UARTFn_Create" InUse="" Init="1" InitMode="" /&gt;
-            &lt;R_UARTF0_Start UserName="R_UARTF0_Start" LibName="R_UARTFn_Start" InUse="" /&gt;
-            &lt;R_UARTF0_Stop UserName="R_UARTF0_Stop" LibName="R_UARTFn_Stop" InUse="" /&gt;
-            &lt;R_UARTF0_Send UserName="R_UARTF0_Send" LibName="R_UARTFn_Send" InUse="" /&gt;
-            &lt;R_UARTF0_Receive UserName="R_UARTF0_Receive" LibName="R_UARTFn_Receive" InUse="" /&gt;
-            &lt;R_UARTF0_Set_DataComparisonOn UserName="R_UARTF0_Set_DataComparisonOn" LibName="R_UARTFn_Set_DataComparisonOn" InUse="" /&gt;
-            &lt;R_UARTF0_Set_DataComparisonOff UserName="R_UARTF0_Set_DataComparisonOff" LibName="R_UARTFn_Set_DataComparisonOff" InUse="" /&gt;
-            &lt;R_UARTF0_Set_PowerOff UserName="R_UARTF0_Set_PowerOff" LibName="R_UARTFn_Set_PowerOff" InUse="" /&gt;
+            &lt;R_UARTF0_Create UserName="R_UARTF0_Create" LibName="R_UARTFn_Create" InUse="1" Init="1" InitMode="" /&gt;
+            &lt;R_UARTF0_Start UserName="R_UARTF0_Start" LibName="R_UARTFn_Start" InUse="1" /&gt;
+            &lt;R_UARTF0_Stop UserName="R_UARTF0_Stop" LibName="R_UARTFn_Stop" InUse="1" /&gt;
+            &lt;R_UARTF0_Send UserName="R_UARTF0_Send" LibName="R_UARTFn_Send" InUse="1" /&gt;
+            &lt;R_UARTF0_Receive UserName="R_UARTF0_Receive" LibName="R_UARTFn_Receive" InUse="1" /&gt;
+            &lt;R_UARTF0_Set_DataComparisonOn UserName="R_UARTF0_Set_DataComparisonOn" LibName="R_UARTFn_Set_DataComparisonOn" InUse="0" /&gt;
+            &lt;R_UARTF0_Set_DataComparisonOff UserName="R_UARTF0_Set_DataComparisonOff" LibName="R_UARTFn_Set_DataComparisonOff" InUse="0" /&gt;
+            &lt;R_UARTF0_Set_PowerOff UserName="R_UARTF0_Set_PowerOff" LibName="R_UARTFn_Set_PowerOff" InUse="0" /&gt;
           &lt;/UARTF0&gt;
         &lt;/r_cg_serial.c&gt;
-        &lt;r_cg_serial_user.c UserName="r_cg_serial_user.c" LibName="_user.c" InUse=""&gt;
+        &lt;r_cg_serial_user.c UserName="r_cg_serial_user.c" LibName="_user.c" InUse="1"&gt;
           &lt;Type R_SAUn_Create_UserInit="void R_SAUn_Create_UserInit(void)" r_uartn_interrupt_receive="__interrupt void r_uartn_interrupt_receive(void)" r_uartn_interrupt_error="__interrupt void r_uartn_interrupt_error(void)" r_uartn_interrupt_send="__interrupt void r_uartn_interrupt_send(void)" r_uartn_callback_sendend="void r_uartn_callback_sendend(void)" r_uartn_callback_receiveend="void r_uartn_callback_receiveend(void)" r_uartn_callback_error="void r_uartn_callback_error(uint16_t err_type)" r_uartn_callback_softwareoverrun="void r_uartn_callback_softwareoverrun(uint16_t err_type)" r_csin_interrupt="__interrupt void r_csin_interrupt(void)" r_csin_callback_receiveend="void r_csin_callback_receiveend(void)" r_csin_callback_error="void r_csin_callback_error(uint16_t err_type)" r_csin_callback_sendend="void r_csin_callback_sendend(void)" r_iicn_interrupt="__interrupt void r_iicn_interrupt(void)" r_iicn_callback_master_receiveend="void r_iicn_callback_master_receiveend(void)" r_iicn_callback_master_sendend="void r_iicn_callback_master_sendend(void)" r_iicn_callback_master_error="void r_iicn_callback_master_error(MD_STATUS flag)" R_UARTFn_Create_UserInit="void R_UARTFn_Create_UserInit(void)" r_uartfn_interrupt_receive="__interrupt static void r_uartfn_interrupt_receive(void)" r_uartfn_interrupt_error="__interrupt static void r_uartfn_interrupt_error(void)" r_uartfn_interrupt_send="__interrupt static void r_uartfn_interrupt_send(void)" r_uartfn_callback_receiveend="static void r_uartfn_callback_receiveend(void)" r_uartfn_callback_sendend="static void r_uartfn_callback_sendend(void)" r_uartfn_callback_error="static void r_uartfn_callback_error(void)" r_uartfn_callback_softwareoverrun="static void r_uartfn_callback_softwareoverrun(uint16_t rx_data)" r_uartfn_callback_expbitdetect="static void r_uartfn_callback_expbitdetect(void)" r_uartfn_callback_idmatch="static void r_uartfn_callback_idmatch(void)" R_IICAn_Create_UserInit="void R_IICAn_Create_UserInit(void)" r_iican_interrupt="__interrupt static r_iican_interrupt(void)" r_iican_callback_master_sendend="static void r_iican_callback_master_sendend(void)" r_iican_callback_master_receiveend="static void r_iican_callback_master_receiveend(void)" r_iican_callback_slave_sendend="static void r_iican_callback_slave_sendend(void)" r_iican_callback_slave_receiveend="static void r_iican_callback_slave_receiveend(void)" r_iican_callback_master_error="static void r_iican_callback_master_error(MD_STATUS flag)" r_iican_callback_slave_error="static void r_iican_callback_slave_error(MD_STATUS flag)" r_iican_callback_getstopcondition="static void r_iican_callback_getstopcondition(void)" /&gt;
           &lt;SAU0 InUse=""&gt;
-            &lt;R_SAU0_Create_UserInit UserName="R_SAU0_Create_UserInit" LibName="R_SAUn_Create_UserInit" InUse="" /&gt;
+            &lt;R_SAU0_Create_UserInit UserName="R_SAU0_Create_UserInit" LibName="R_SAUn_Create_UserInit" InUse="0" /&gt;
             &lt;UART0 InUse=""&gt;
-              &lt;r_uart0_interrupt_receive UserName="r_uart0_interrupt_receive" INTHandle="" LibName="r_uartn_interrupt_receive" InUse="" /&gt;
-              &lt;r_uart0_interrupt_error UserName="r_uart0_interrupt_error" INTHandle="" LibName="r_uartn_interrupt_error" InUse="" /&gt;
-              &lt;r_uart0_interrupt_send UserName="r_uart0_interrupt_send" INTHandle="" LibName="r_uartn_interrupt_send" InUse="" /&gt;
-              &lt;r_uart0_callback_receiveend UserName="r_uart0_callback_receiveend" LibName="r_uartn_callback_receiveend" InUse="" /&gt;
-              &lt;r_uart0_callback_sendend UserName="r_uart0_callback_sendend" LibName="r_uartn_callback_sendend" InUse="" /&gt;
-              &lt;r_uart0_callback_error UserName="r_uart0_callback_error" LibName="r_uartn_callback_error" InUse="" /&gt;
-              &lt;r_uart0_callback_softwareoverrun UserName="r_uart0_callback_softwareoverrun" LibName="r_uartn_callback_softwareoverrun" InUse="" /&gt;
+              &lt;r_uart0_interrupt_receive UserName="r_uart0_interrupt_receive" INTHandle="" LibName="r_uartn_interrupt_receive" InUse="0" /&gt;
+              &lt;r_uart0_interrupt_error UserName="r_uart0_interrupt_error" INTHandle="" LibName="r_uartn_interrupt_error" InUse="0" /&gt;
+              &lt;r_uart0_interrupt_send UserName="r_uart0_interrupt_send" INTHandle="" LibName="r_uartn_interrupt_send" InUse="0" /&gt;
+              &lt;r_uart0_callback_receiveend UserName="r_uart0_callback_receiveend" LibName="r_uartn_callback_receiveend" InUse="0" /&gt;
+              &lt;r_uart0_callback_sendend UserName="r_uart0_callback_sendend" LibName="r_uartn_callback_sendend" InUse="0" /&gt;
+              &lt;r_uart0_callback_error UserName="r_uart0_callback_error" LibName="r_uartn_callback_error" InUse="0" /&gt;
+              &lt;r_uart0_callback_softwareoverrun UserName="r_uart0_callback_softwareoverrun" LibName="r_uartn_callback_softwareoverrun" InUse="0" /&gt;
             &lt;/UART0&gt;
             &lt;CSI00 Chip="RL78F12_20pin,RL78F12_30pin,RL78F12_32pin,RL78F12_48pin,RL78F12_64pin" InUse="" PIOR1="0"&gt;
-              &lt;r_csi00_interrupt UserName="r_csi00_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="" /&gt;
-              &lt;r_csi00_callback_receiveend UserName="r_csi00_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="" /&gt;
-              &lt;r_csi00_callback_error UserName="r_csi00_callback_error" LibName="r_csin_callback_error" InUse="" /&gt;
-              &lt;r_csi00_callback_sendend UserName="r_csi00_callback_sendend" LibName="r_csin_callback_sendend" InUse="" /&gt;
+              &lt;r_csi00_interrupt UserName="r_csi00_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="0" /&gt;
+              &lt;r_csi00_callback_receiveend UserName="r_csi00_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="0" /&gt;
+              &lt;r_csi00_callback_error UserName="r_csi00_callback_error" LibName="r_csin_callback_error" InUse="0" /&gt;
+              &lt;r_csi00_callback_sendend UserName="r_csi00_callback_sendend" LibName="r_csin_callback_sendend" InUse="0" /&gt;
             &lt;/CSI00&gt;
             &lt;CSI11 InUse=""&gt;
-              &lt;r_csi11_interrupt UserName="r_csi11_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="" /&gt;
-              &lt;r_csi11_callback_receiveend UserName="r_csi11_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="" /&gt;
-              &lt;r_csi11_callback_error UserName="r_csi11_callback_error" LibName="r_csin_callback_error" InUse="" /&gt;
-              &lt;r_csi11_callback_sendend UserName="r_csi11_callback_sendend" LibName="r_csin_callback_sendend" InUse="" /&gt;
+              &lt;r_csi11_interrupt UserName="r_csi11_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="0" /&gt;
+              &lt;r_csi11_callback_receiveend UserName="r_csi11_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="0" /&gt;
+              &lt;r_csi11_callback_error UserName="r_csi11_callback_error" LibName="r_csin_callback_error" InUse="0" /&gt;
+              &lt;r_csi11_callback_sendend UserName="r_csi11_callback_sendend" LibName="r_csin_callback_sendend" InUse="0" /&gt;
             &lt;/CSI11&gt;
             &lt;IIC00 InUse="" PIOR1="0"&gt;
-              &lt;r_iic00_interrupt UserName="r_iic00_interrupt" INTHandle="" LibName="r_iicn_interrupt" InUse="" /&gt;
-              &lt;r_iic00_callback_master_receiveend UserName="r_iic00_callback_master_receiveend" LibName="r_iicn_callback_master_receiveend" InUse="" /&gt;
-              &lt;r_iic00_callback_master_sendend UserName="r_iic00_callback_master_sendend" LibName="r_iicn_callback_master_sendend" InUse="" /&gt;
-              &lt;r_iic00_callback_master_error UserName="r_iic00_callback_master_error" LibName="r_iicn_callback_master_error" InUse="" /&gt;
+              &lt;r_iic00_interrupt UserName="r_iic00_interrupt" INTHandle="" LibName="r_iicn_interrupt" InUse="0" /&gt;
+              &lt;r_iic00_callback_master_receiveend UserName="r_iic00_callback_master_receiveend" LibName="r_iicn_callback_master_receiveend" InUse="0" /&gt;
+              &lt;r_iic00_callback_master_sendend UserName="r_iic00_callback_master_sendend" LibName="r_iicn_callback_master_sendend" InUse="0" /&gt;
+              &lt;r_iic00_callback_master_error UserName="r_iic00_callback_master_error" LibName="r_iicn_callback_master_error" InUse="0" /&gt;
             &lt;/IIC00&gt;
           &lt;/SAU0&gt;
           &lt;SAUS InUse=""&gt;
-            &lt;R_SAUS_Create_UserInit UserName="R_SAUS_Create_UserInit" LibName="R_SAUn_Create_UserInit" InUse="" /&gt;
+            &lt;R_SAUS_Create_UserInit UserName="R_SAUS_Create_UserInit" LibName="R_SAUn_Create_UserInit" InUse="0" /&gt;
             &lt;UARTS0 InUse=""&gt;
-              &lt;r_uarts0_interrupt_receive UserName="r_uarts0_interrupt_receive" INTHandle="" LibName="r_uartn_interrupt_receive" InUse="" /&gt;
-              &lt;r_uarts0_interrupt_error UserName="r_uarts0_interrupt_error" INTHandle="" LibName="r_uartn_interrupt_error" InUse="" /&gt;
-              &lt;r_uarts0_interrupt_send UserName="r_uarts0_interrupt_send" INTHandle="" LibName="r_uartn_interrupt_send" InUse="" /&gt;
-              &lt;r_uarts0_callback_receiveend UserName="r_uarts0_callback_receiveend" LibName="r_uartn_callback_receiveend" InUse="" /&gt;
-              &lt;r_uarts0_callback_sendend UserName="r_uarts0_callback_sendend" LibName="r_uartn_callback_sendend" InUse="" /&gt;
-              &lt;r_uarts0_callback_error UserName="r_uarts0_callback_error" LibName="r_uartn_callback_error" InUse="" /&gt;
-              &lt;r_uarts0_callback_softwareoverrun UserName="r_uarts0_callback_softwareoverrun" LibName="r_uartn_callback_softwareoverrun" InUse="" /&gt;
+              &lt;r_uarts0_interrupt_receive UserName="r_uarts0_interrupt_receive" INTHandle="" LibName="r_uartn_interrupt_receive" InUse="0" /&gt;
+              &lt;r_uarts0_interrupt_error UserName="r_uarts0_interrupt_error" INTHandle="" LibName="r_uartn_interrupt_error" InUse="0" /&gt;
+              &lt;r_uarts0_interrupt_send UserName="r_uarts0_interrupt_send" INTHandle="" LibName="r_uartn_interrupt_send" InUse="0" /&gt;
+              &lt;r_uarts0_callback_receiveend UserName="r_uarts0_callback_receiveend" LibName="r_uartn_callback_receiveend" InUse="0" /&gt;
+              &lt;r_uarts0_callback_sendend UserName="r_uarts0_callback_sendend" LibName="r_uartn_callback_sendend" InUse="0" /&gt;
+              &lt;r_uarts0_callback_error UserName="r_uarts0_callback_error" LibName="r_uartn_callback_error" InUse="0" /&gt;
+              &lt;r_uarts0_callback_softwareoverrun UserName="r_uarts0_callback_softwareoverrun" LibName="r_uartn_callback_softwareoverrun" InUse="0" /&gt;
             &lt;/UARTS0&gt;
             &lt;CSIS0 InUse=""&gt;
-              &lt;r_csis0_interrupt UserName="r_csis0_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="" /&gt;
-              &lt;r_csis0_callback_receiveend UserName="r_csis0_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="" /&gt;
-              &lt;r_csis0_callback_error UserName="r_csis0_callback_error" LibName="r_csin_callback_error" InUse="" /&gt;
-              &lt;r_csis0_callback_sendend UserName="r_csis0_callback_sendend" LibName="r_csin_callback_sendend" InUse="" /&gt;
+              &lt;r_csis0_interrupt UserName="r_csis0_interrupt" INTHandle="" LibName="r_csin_interrupt" InUse="0" /&gt;
+              &lt;r_csis0_callback_receiveend UserName="r_csis0_callback_receiveend" LibName="r_csin_callback_receiveend" InUse="0" /&gt;
+              &lt;r_csis0_callback_error UserName="r_csis0_callback_error" LibName="r_csin_callback_error" InUse="0" /&gt;
+              &lt;r_csis0_callback_sendend UserName="r_csis0_callback_sendend" LibName="r_csin_callback_sendend" InUse="0" /&gt;
             &lt;/CSIS0&gt;
           &lt;/SAUS&gt;
           &lt;UARTF0 InUse=""&gt;
-            &lt;R_UARTF0_Create_UserInit UserName="R_UARTF0_Create_UserInit" LibName="R_UARTFn_Create_UserInit" InUse="" /&gt;
-            &lt;r_uartf0_interrupt_receive UserName="r_uartf0_interrupt_receive" INTHandle="" LibName="r_uartfn_interrupt_receive" InUse="" /&gt;
-            &lt;r_uartf0_interrupt_error UserName="r_uartf0_interrupt_error" INTHandle="" LibName="r_uartfn_interrupt_error" InUse="" /&gt;
-            &lt;r_uartf0_interrupt_send UserName="r_uartf0_interrupt_send" INTHandle="" LibName="r_uartfn_interrupt_send" InUse="" /&gt;
-            &lt;r_uartf0_callback_receiveend UserName="r_uartf0_callback_receiveend" LibName="r_uartfn_callback_receiveend" InUse="" /&gt;
-            &lt;r_uartf0_callback_sendend UserName="r_uartf0_callback_sendend" LibName="r_uartfn_callback_sendend" InUse="" /&gt;
-            &lt;r_uartf0_callback_error UserName="r_uartf0_callback_error" LibName="r_uartfn_callback_error" InUse="" /&gt;
-            &lt;r_uartf0_callback_softwareoverrun UserName="r_uartf0_callback_softwareoverrun" LibName="r_uartfn_callback_softwareoverrun" InUse="" /&gt;
-            &lt;r_uartf0_callback_expbitdetect UserName="r_uartf0_callback_expbitdetect" LibName="r_uartfn_callback_expbitdetect" InUse="" /&gt;
-            &lt;r_uartf0_callback_idmatch UserName="r_uartf0_callback_idmatch" LibName="r_uartfn_callback_idmatch" InUse="" /&gt;
+            &lt;R_UARTF0_Create_UserInit UserName="R_UARTF0_Create_UserInit" LibName="R_UARTFn_Create_UserInit" InUse="0" /&gt;
+            &lt;r_uartf0_interrupt_receive UserName="r_uartf0_interrupt_receive" INTHandle="" LibName="r_uartfn_interrupt_receive" InUse="1" /&gt;
+            &lt;r_uartf0_interrupt_error UserName="r_uartf0_interrupt_error" INTHandle="" LibName="r_uartfn_interrupt_error" InUse="1" /&gt;
+            &lt;r_uartf0_interrupt_send UserName="r_uartf0_interrupt_send" INTHandle="" LibName="r_uartfn_interrupt_send" InUse="1" /&gt;
+            &lt;r_uartf0_callback_receiveend UserName="r_uartf0_callback_receiveend" LibName="r_uartfn_callback_receiveend" InUse="0" /&gt;
+            &lt;r_uartf0_callback_sendend UserName="r_uartf0_callback_sendend" LibName="r_uartfn_callback_sendend" InUse="0" /&gt;
+            &lt;r_uartf0_callback_error UserName="r_uartf0_callback_error" LibName="r_uartfn_callback_error" InUse="0" /&gt;
+            &lt;r_uartf0_callback_softwareoverrun UserName="r_uartf0_callback_softwareoverrun" LibName="r_uartfn_callback_softwareoverrun" InUse="0" /&gt;
+            &lt;r_uartf0_callback_expbitdetect UserName="r_uartf0_callback_expbitdetect" LibName="r_uartfn_callback_expbitdetect" InUse="0" /&gt;
+            &lt;r_uartf0_callback_idmatch UserName="r_uartf0_callback_idmatch" LibName="r_uartfn_callback_idmatch" InUse="0" /&gt;
           &lt;/UARTF0&gt;
         &lt;/r_cg_serial_user.c&gt;
-        &lt;r_cg_serial.h UserName="r_cg_serial.h" LibName=".h" InUse="" /&gt;
+        &lt;r_cg_serial.h UserName="r_cg_serial.h" LibName=".h" InUse="1" /&gt;
       &lt;/Serial&gt;
       &lt;ADC&gt;
-        &lt;r_cg_adc.c UserName="r_cg_adc.c" LibName=".c" InUse=""&gt;
+        &lt;r_cg_adc.c UserName="r_cg_adc.c" LibName=".c" InUse="1"&gt;
           &lt;Type R_ADC_Create="void R_ADC_Create(void)" R_ADC_Start="void R_ADC_Start(void)" R_ADC_Stop="void R_ADC_Stop(void)" R_ADC_Set_OperationOn="void R_ADC_Set_OperationOn(void)" R_ADC_Set_OperationOff="void R_ADC_Set_OperationOff(void)" R_ADC_Get_Result="void R_ADC_Get_Result(uint16_t * const buffer)" R_ADC_Get_Result_8bit="void R_ADC_Get_Result_8bit(uint8_t * const buffer)" R_ADC_Set_ADChannel="MD_STATUS R_ADC_Set_ADChannel(ad_channel_t channel)" R_ADC_Set_SnoozeOn="void R_ADC_Set_SnoozeOn(void)" R_ADC_Set_SnoozeOff="void R_ADC_Set_SnoozeOff(void)" R_ADC_Set_TestChannel="MD_STATUS R_ADC_Set_TestChannel(test_channel_t channel)" R_ADC_Set_PowerOff="void R_ADC_Set_PowerOff(void)" /&gt;
-          &lt;R_ADC_Create UserName="R_ADC_Create" LibName="R_ADC_Create" InUse="" Init="1" InitMode="" /&gt;
-          &lt;R_ADC_Start UserName="R_ADC_Start" LibName="R_ADC_Start" InUse="" /&gt;
-          &lt;R_ADC_Stop UserName="R_ADC_Stop" LibName="R_ADC_Stop" InUse="" /&gt;
-          &lt;R_ADC_Set_OperationOn UserName="R_ADC_Set_OperationOn" LibName="R_ADC_Set_OperationOn" InUse="" /&gt;
-          &lt;R_ADC_Set_OperationOff UserName="R_ADC_Set_OperationOff" LibName="R_ADC_Set_OperationOff" InUse="" /&gt;
-          &lt;R_ADC_Get_Result UserName="R_ADC_Get_Result" LibName="R_ADC_Get_Result" InUse="" /&gt;
-          &lt;R_ADC_Get_Result_8bit UserName="R_ADC_Get_Result_8bit" LibName="R_ADC_Get_Result_8bit" InUse="" /&gt;
-          &lt;R_ADC_Set_ADChannel UserName="R_ADC_Set_ADChannel" LibName="R_ADC_Set_ADChannel" InUse="" /&gt;
-          &lt;R_ADC_Set_SnoozeOn UserName="R_ADC_Set_SnoozeOn" LibName="R_ADC_Set_SnoozeOn" InUse="" /&gt;
-          &lt;R_ADC_Set_SnoozeOff UserName="R_ADC_Set_SnoozeOff" LibName="R_ADC_Set_SnoozeOff" InUse="" /&gt;
-          &lt;R_ADC_Set_TestChannel UserName="R_ADC_Set_TestChannel" LibName="R_ADC_Set_TestChannel" InUse="" /&gt;
-          &lt;R_ADC_Set_PowerOff UserName="R_ADC_Set_PowerOff" LibName="R_ADC_Set_PowerOff" InUse="" /&gt;
+          &lt;R_ADC_Create UserName="R_ADC_Create" LibName="R_ADC_Create" InUse="1" Init="1" InitMode="" /&gt;
+          &lt;R_ADC_Start UserName="R_ADC_Start" LibName="R_ADC_Start" InUse="1" /&gt;
+          &lt;R_ADC_Stop UserName="R_ADC_Stop" LibName="R_ADC_Stop" InUse="1" /&gt;
+          &lt;R_ADC_Set_OperationOn UserName="R_ADC_Set_OperationOn" LibName="R_ADC_Set_OperationOn" InUse="1" /&gt;
+          &lt;R_ADC_Set_OperationOff UserName="R_ADC_Set_OperationOff" LibName="R_ADC_Set_OperationOff" InUse="1" /&gt;
+          &lt;R_ADC_Get_Result UserName="R_ADC_Get_Result" LibName="R_ADC_Get_Result" InUse="1" /&gt;
+          &lt;R_ADC_Get_Result_8bit UserName="R_ADC_Get_Result_8bit" LibName="R_ADC_Get_Result_8bit" InUse="0" /&gt;
+          &lt;R_ADC_Set_ADChannel UserName="R_ADC_Set_ADChannel" LibName="R_ADC_Set_ADChannel" InUse="0" /&gt;
+          &lt;R_ADC_Set_SnoozeOn UserName="R_ADC_Set_SnoozeOn" LibName="R_ADC_Set_SnoozeOn" InUse="0" /&gt;
+          &lt;R_ADC_Set_SnoozeOff UserName="R_ADC_Set_SnoozeOff" LibName="R_ADC_Set_SnoozeOff" InUse="0" /&gt;
+          &lt;R_ADC_Set_TestChannel UserName="R_ADC_Set_TestChannel" LibName="R_ADC_Set_TestChannel" InUse="0" /&gt;
+          &lt;R_ADC_Set_PowerOff UserName="R_ADC_Set_PowerOff" LibName="R_ADC_Set_PowerOff" InUse="0" /&gt;
         &lt;/r_cg_adc.c&gt;
-        &lt;r_cg_adc_user.c UserName="r_cg_adc_user.c" LibName="_user.c" InUse=""&gt;
+        &lt;r_cg_adc_user.c UserName="r_cg_adc_user.c" LibName="_user.c" InUse="1"&gt;
           &lt;Type R_ADC_Create_UserInit="void R_ADC_Create_UserInit(void)" r_adc_interrupt="__interrupt static void r_adc_interrupt(void)" /&gt;
-          &lt;R_ADC_Create_UserInit UserName="R_ADC_Create_UserInit" LibName="R_ADC_Create_UserInit" InUse="" /&gt;
-          &lt;r_adc_interrupt UserName="r_adc_interrupt" INTHandle="" LibName="r_adc_interrupt" InUse="" /&gt;
+          &lt;R_ADC_Create_UserInit UserName="R_ADC_Create_UserInit" LibName="R_ADC_Create_UserInit" InUse="0" /&gt;
+          &lt;r_adc_interrupt UserName="r_adc_interrupt" INTHandle="" LibName="r_adc_interrupt" InUse="1" /&gt;
         &lt;/r_cg_adc_user.c&gt;
-        &lt;r_cg_adc.h UserName="r_cg_adc.h" LibName=".h" InUse="" /&gt;
+        &lt;r_cg_adc.h UserName="r_cg_adc.h" LibName=".h" InUse="1" /&gt;
       &lt;/ADC&gt;
       &lt;TAU&gt;
         &lt;r_cg_timer.c UserName="r_cg_timer.c" LibName=".c" InUse="1"&gt;
@@ -838,17 +854,17 @@
         &lt;r_cg_timer.h UserName="r_cg_timer.h" LibName=".h" InUse="1" /&gt;
       &lt;/TAU&gt;
       &lt;WDT&gt;
-        &lt;r_cg_wdt.c UserName="r_cg_wdt.c" LibName=".c" InUse="1"&gt;
+        &lt;r_cg_wdt.c UserName="r_cg_wdt.c" LibName=".c" InUse="0"&gt;
           &lt;Type R_WDT_Create="void R_WDT_Create(void)" R_WDT_Restart="void R_WDT_Restart(void)" /&gt;
-          &lt;R_WDT_Create UserName="R_WDT_Create" LibName="R_WDT_Create" InUse="1" Init="1" InitMode="" /&gt;
-          &lt;R_WDT_Restart UserName="R_WDT_Restart" LibName="R_WDT_Restart" InUse="1" /&gt;
+          &lt;R_WDT_Create UserName="R_WDT_Create" LibName="R_WDT_Create" InUse="0" Init="1" InitMode="" /&gt;
+          &lt;R_WDT_Restart UserName="R_WDT_Restart" LibName="R_WDT_Restart" InUse="0" /&gt;
         &lt;/r_cg_wdt.c&gt;
-        &lt;r_cg_wdt_user.c UserName="r_cg_wdt_user.c" LibName="_user.c" InUse="1"&gt;
+        &lt;r_cg_wdt_user.c UserName="r_cg_wdt_user.c" LibName="_user.c" InUse="0"&gt;
           &lt;Type R_WDT_Create_UserInit="void R_WDT_Create_UserInit(void)" r_wdt_interrupt="__interrupt static void r_wdt_interrupt(void)" /&gt;
           &lt;R_WDT_Create_UserInit UserName="R_WDT_Create_UserInit" LibName="R_WDT_Create_UserInit" InUse="0" /&gt;
-          &lt;r_wdt_interrupt UserName="r_wdt_interrupt" INTHandle="" LibName="r_wdt_interrupt" InUse="1" /&gt;
+          &lt;r_wdt_interrupt UserName="r_wdt_interrupt" INTHandle="" LibName="r_wdt_interrupt" InUse="0" /&gt;
         &lt;/r_cg_wdt_user.c&gt;
-        &lt;r_cg_wdt.h UserName="r_cg_wdt.h" LibName=".h" InUse="1" /&gt;
+        &lt;r_cg_wdt.h UserName="r_cg_wdt.h" LibName=".h" InUse="0" /&gt;
       &lt;/WDT&gt;
       &lt;RTC&gt;
         &lt;r_cg_rtc.c UserName="r_cg_rtc.c" LibName=".c" InUse=""&gt;
@@ -953,16 +969,16 @@
         &lt;cg_security0 Name="cg_security0" Value="00" /&gt;
         &lt;cg_security1 Name="cg_security1" Value="00" /&gt;
         &lt;clock_option Name="clock_option" Value="E8" /&gt;
-        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
         &lt;pior_value Name="pior_value" Value="00" /&gt;
         &lt;cg_option Name="cg_option" Value="04" /&gt;
         &lt;cg_security8 Name="cg_security8" Value="00" /&gt;
         &lt;cg_security6 Name="cg_security6" Value="00" /&gt;
         &lt;ocdstart Name="ocdstart" Value="07E00" /&gt;
-        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
+        &lt;cg_security2 Name="cg_security2" Value="00" /&gt;
         &lt;cg_iawctl_value Name="cg_iawctl_value" Value="00" /&gt;
         &lt;lvi_option Name="lvi_option" Value="FF" /&gt;
-        &lt;wdt_option Name="wdt_option" Value="FF" /&gt;
+        &lt;wdt_option Name="wdt_option" Value="EF" /&gt;
+        &lt;cg_security4 Name="cg_security4" Value="00" /&gt;
       &lt;/GlobleUserTag&gt;
     &lt;/TAG&gt;
   &lt;/DIR&gt;
@@ -976,26 +992,26 @@
     &lt;INTC SetFlag="" HelpID="int" NeedRefresh="False"&gt;
       &lt;INTP Accelerate="No" MacroName="INTP" /&gt;
     &lt;/INTC&gt;
-    &lt;Serial SetFlag="" HelpID="serial" NeedRefresh="False"&gt;
-      &lt;SAU0 Accelerate="No" MacroName="SAU" Channel="0"&gt;
+    &lt;Serial SetFlag="True" HelpID="serial" NeedRefresh="False"&gt;
+      &lt;SAU0 Accelerate="No" MacroName="SAU" Channel="0" SetFlag="False" TabEnable="True"&gt;
         &lt;Channel0 Chip="RL78F12_20pin,RL78F12_30pin,RL78F12_32pin,RL78F12_48pin,RL78F12_64pin" PIOR1="0" UART="0" CSI="00" IIC="00" Channel="0" /&gt;
         &lt;Channel1 Chip="RL78F12_20pin,RL78F12_30pin,RL78F12_32pin" UART="0" Channel="1" /&gt;
       &lt;/SAU0&gt;
-      &lt;SAUS Accelerate="No" MacroName="SAU" Channel="2"&gt;
+      &lt;SAUS Accelerate="No" MacroName="SAU" Channel="2" SetFlag="False" TabEnable="True"&gt;
         &lt;Channel0 UARTS="0" CSIS="0" Channel="0" /&gt;
         &lt;Channel1 Chip="RL78F12_20pin,RL78F12_30pin,RL78F12_32pin,RL78F12_48pin" UARTS="0" Channel="1" /&gt;
       &lt;/SAUS&gt;
-      &lt;UARTF0 MacroName="UARTF" Channel="0" /&gt;
+      &lt;UARTF0 MacroName="UARTF" Channel="0" SetFlag="True" TabEnable="True" /&gt;
     &lt;/Serial&gt;
-    &lt;ADC SetFlag="" HelpID="adc" NeedRefresh="False"&gt;
-      &lt;ADC SetFlag="" MacroName="ADC" /&gt;
+    &lt;ADC SetFlag="True" HelpID="adc" NeedRefresh="False"&gt;
+      &lt;ADC SetFlag="True" MacroName="ADC" /&gt;
     &lt;/ADC&gt;
     &lt;TAU SetFlag="True" HelpID="timer" NeedRefresh="False"&gt;
       &lt;TAU0 Accelerate="No" MacroName="TAU" Channel="0" ChannelNum="0,1,2,3,4,5,6,7" SetFlag="True" TabEnable="True" /&gt;
       &lt;WUTM MacroName="WUTM" SetFlag="False" TabEnable="True" /&gt;
     &lt;/TAU&gt;
-    &lt;WDT Prepared="true" SetFlag="True" HelpID="watchdogtimer" NeedRefresh="False"&gt;
-      &lt;WDT SetFlag="True" MacroName="WDT" /&gt;
+    &lt;WDT Prepared="true" SetFlag="False" HelpID="watchdogtimer" NeedRefresh="False"&gt;
+      &lt;WDT SetFlag="False" MacroName="WDT" /&gt;
     &lt;/WDT&gt;
     &lt;RTC SetFlag="" HelpID="rtc" NeedRefresh="False"&gt;
       &lt;RTC MacroName="RTC" /&gt;
@@ -1088,9 +1104,9 @@
           &lt;setting name="OUTPUT_1" value="true" /&gt;
         &lt;/P10&gt;
         &lt;P11&gt;
-          &lt;setting name="MODULE_UNUSED" value="true" /&gt;
+          &lt;setting name="MODULE_UNUSED" value="false" /&gt;
           &lt;setting name="INPUT_MODE" value="false" /&gt;
-          &lt;setting name="OUTPUT_MODE" value="false" /&gt;
+          &lt;setting name="OUTPUT_MODE" value="true" /&gt;
           &lt;setting name="PULLUP_ON" value="false" /&gt;
           &lt;setting name="TTL_ON" value="false" /&gt;
           &lt;setting name="NCH_ON" value="false" /&gt;
@@ -1106,9 +1122,9 @@
           &lt;setting name="OUTPUT_1" value="false" /&gt;
         &lt;/P12&gt;
         &lt;P16&gt;
-          &lt;setting name="MODULE_UNUSED" value="true" /&gt;
+          &lt;setting name="MODULE_UNUSED" value="false" /&gt;
           &lt;setting name="INPUT_MODE" value="false" /&gt;
-          &lt;setting name="OUTPUT_MODE" value="false" /&gt;
+          &lt;setting name="OUTPUT_MODE" value="true" /&gt;
           &lt;setting name="PULLUP_ON" value="false" /&gt;
           &lt;setting name="TTL_ON" value="false" /&gt;
           &lt;setting name="NCH_ON" value="false" /&gt;
@@ -1292,8 +1308,8 @@
       &lt;setting name="INTTERRUPT_PRIORITY" value="3" /&gt;
     &lt;/WUTM&gt;
     &lt;WDT&gt;
-      &lt;setting name="MODULE_USED" value="true" /&gt;
-      &lt;setting name="MODULE_UNUSE" value="false" /&gt;
+      &lt;setting name="MODULE_USED" value="false" /&gt;
+      &lt;setting name="MODULE_UNUSE" value="true" /&gt;
       &lt;setting name="OVERFLOW_TIME" value="7" /&gt;
       &lt;setting name="WINDOW_OPEN_TIME" value="2" /&gt;
       &lt;setting name="HALT_STOP_OPERATION_ENABLE" value="true" /&gt;
@@ -1301,6 +1317,187 @@
       &lt;setting name="INTERRUPT_USED" value="true" /&gt;
       &lt;setting name="INTERRUPT_PRIORITY" value="3" /&gt;
     &lt;/WDT&gt;
+    &lt;SAU0&gt;
+      &lt;IIC00 /&gt;
+      &lt;CSI00 /&gt;
+      &lt;UART0 /&gt;
+      &lt;Channel0&gt;
+        &lt;setting name="CHANNEL_FUNCTION" value="0" /&gt;
+        &lt;setting name="DETAIL_FUNCTION" value="-1" /&gt;
+        &lt;Receive_UART0&gt;
+          &lt;setting name="RECEIVE_DATA_DIRECTION_LSB" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_DIRECTION_MSB" value="false" /&gt;
+          &lt;setting name="RECEIVE_LEVEL_REVERSE" value="false" /&gt;
+          &lt;setting name="RECEIVE_LEVEL_NORMAL" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_8_BITS" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_7_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_9_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_16_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_EVEN" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_ODD" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_ZERO" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_NONE" value="true" /&gt;
+          &lt;setting name="RECEIVE_TRANSFER_BAUDRATE_VALUE" value="9600" /&gt;
+          &lt;setting name="CALLBACK_RECEIVE_END_USE" value="true" /&gt;
+          &lt;setting name="CALLBACK_RECEIVE_ERROR_USE" value="true" /&gt;
+          &lt;setting name="TRANSFER_MODE_CONTINUOUS" value="false" /&gt;
+          &lt;setting name="TRANSFER_MODE_SINGLE" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_DIRECTION_LSB" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_DIRECTION_MSB" value="false" /&gt;
+          &lt;setting name="TRANSMIT_LEVEL_REVERSE" value="false" /&gt;
+          &lt;setting name="TRANSMIT_LEVEL_NORMAL" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_8_BITS" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_7_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_9_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_16_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_EVEN" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_ODD" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_ZERO" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_NONE" value="true" /&gt;
+          &lt;setting name="TRANSMIT_STOP_LENGTH_2_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_STOP_LENGTH_1_BIT" value="true" /&gt;
+          &lt;setting name="TRANSMIT_TRANSFER_BAUDRATE_VALUE" value="9600" /&gt;
+          &lt;setting name="CALLBACK_TRANSMIT_END_USE" value="true" /&gt;
+          &lt;setting name="INT_PRIORITY_TRANSMIT_END" value="3" /&gt;
+          &lt;setting name="INT_PRIORITY_RECEPTION_ERROR" value="3" /&gt;
+          &lt;setting name="INT_PRIORITY_RECEPTION_END" value="3" /&gt;
+          &lt;setting name="RECEIVE_ERROR_INTTERUPT" value="false" /&gt;
+        &lt;/Receive_UART0&gt;
+      &lt;/Channel0&gt;
+      &lt;Channel1&gt;
+        &lt;setting name="CHANNEL_FUNCTION" value="0" /&gt;
+        &lt;setting name="DETAIL_FUNCTION" value="-1" /&gt;
+      &lt;/Channel1&gt;
+    &lt;/SAU0&gt;
+    &lt;SAUS&gt;
+      &lt;CSIS0 /&gt;
+      &lt;UARTS0 /&gt;
+      &lt;Channel0&gt;
+        &lt;setting name="CHANNEL_FUNCTION" value="0" /&gt;
+        &lt;setting name="DETAIL_FUNCTION" value="-1" /&gt;
+        &lt;Transmit_UARTS0&gt;
+          &lt;setting name="RECEIVE_DATA_DIRECTION_LSB" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_DIRECTION_MSB" value="false" /&gt;
+          &lt;setting name="RECEIVE_LEVEL_REVERSE" value="false" /&gt;
+          &lt;setting name="RECEIVE_LEVEL_NORMAL" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_8_BITS" value="true" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_7_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_9_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_DATA_LENGTH_16_BITS" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_EVEN" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_ODD" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_ZERO" value="false" /&gt;
+          &lt;setting name="RECEIVE_PARITY_NONE" value="true" /&gt;
+          &lt;setting name="RECEIVE_TRANSFER_BAUDRATE_VALUE" value="9600" /&gt;
+          &lt;setting name="CALLBACK_RECEIVE_END_USE" value="true" /&gt;
+          &lt;setting name="CALLBACK_RECEIVE_ERROR_USE" value="true" /&gt;
+          &lt;setting name="TRANSFER_MODE_CONTINUOUS" value="false" /&gt;
+          &lt;setting name="TRANSFER_MODE_SINGLE" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_DIRECTION_LSB" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_DIRECTION_MSB" value="false" /&gt;
+          &lt;setting name="TRANSMIT_LEVEL_REVERSE" value="false" /&gt;
+          &lt;setting name="TRANSMIT_LEVEL_NORMAL" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_8_BITS" value="true" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_7_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_9_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_DATA_LENGTH_16_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_EVEN" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_ODD" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_ZERO" value="false" /&gt;
+          &lt;setting name="TRANSMIT_PARITY_NONE" value="true" /&gt;
+          &lt;setting name="TRANSMIT_STOP_LENGTH_2_BITS" value="false" /&gt;
+          &lt;setting name="TRANSMIT_STOP_LENGTH_1_BIT" value="true" /&gt;
+          &lt;setting name="TRANSMIT_TRANSFER_BAUDRATE_VALUE" value="9600" /&gt;
+          &lt;setting name="CALLBACK_TRANSMIT_END_USE" value="true" /&gt;
+          &lt;setting name="INT_PRIORITY_TRANSMIT_END" value="3" /&gt;
+          &lt;setting name="INT_PRIORITY_RECEPTION_ERROR" value="3" /&gt;
+          &lt;setting name="INT_PRIORITY_RECEPTION_END" value="3" /&gt;
+          &lt;setting name="RECEIVE_ERROR_INTTERUPT" value="false" /&gt;
+        &lt;/Transmit_UARTS0&gt;
+      &lt;/Channel0&gt;
+      &lt;Channel1&gt;
+        &lt;setting name="CHANNEL_FUNCTION" value="0" /&gt;
+        &lt;setting name="DETAIL_FUNCTION" value="-1" /&gt;
+      &lt;/Channel1&gt;
+    &lt;/SAUS&gt;
+    &lt;UARTF0&gt;
+      &lt;setting name="TRANSFER_MODE_BOTH" value="true" /&gt;
+      &lt;setting name="TRANSFER_MODE_TRANSMIT" value="false" /&gt;
+      &lt;setting name="TRANSFER_MODE_RECEIVE" value="false" /&gt;
+      &lt;setting name="TRANSFER_MODE_UNUSED" value="false" /&gt;
+      &lt;Both0&gt;
+        &lt;setting name="TRANSMIT_DATA_LENGTH_9_BITS" value="false" /&gt;
+        &lt;setting name="DATA_LENGTH_8_BITS" value="true" /&gt;
+        &lt;setting name="DATA_LENGTH_7_BITS" value="false" /&gt;
+        &lt;setting name="RECEIVE_DATA_NOISE_FILTER_USED" value="false" /&gt;
+        &lt;setting name="RECEIVE_DATA_NOISE_FILTER_UNUSED" value="true" /&gt;
+        &lt;setting name="DATA_DIRECTION_LSB" value="true" /&gt;
+        &lt;setting name="DATA_DIRECTION_MSB" value="false" /&gt;
+        &lt;setting name="PARITY_EVEN" value="false" /&gt;
+        &lt;setting name="PARITY_ODD" value="false" /&gt;
+        &lt;setting name="TRANSMIT_PARITY_ZERO" value="false" /&gt;
+        &lt;setting name="PARITY_NONE" value="true" /&gt;
+        &lt;setting name="TRANSMIT_STOP_LENGTH_2_BITS" value="false" /&gt;
+        &lt;setting name="TRANSMIT_STOP_LENGTH_1_BIT" value="true" /&gt;
+        &lt;setting name="ONE_BYTE_TRANSFER_MODE" value="false" /&gt;
+        &lt;setting name="BUFFER_MODE" value="true" /&gt;
+        &lt;setting name="EXPANSION_BIT_VALUE_1" value="false" /&gt;
+        &lt;setting name="EXPANSION_BIT_VALUE_0" value="true" /&gt;
+        &lt;setting name="TRANSMIT_LEVEL_REVERSE" value="false" /&gt;
+        &lt;setting name="TRANSMIT_LEVEL_NORMAL" value="true" /&gt;
+        &lt;setting name="RECEIVE_LEVEL_REVERSE" value="false" /&gt;
+        &lt;setting name="RECEIVE_LEVEL_NORMAL" value="true" /&gt;
+        &lt;setting name="RECEIVE_DATA_COMPARISON_DISABLE" value="true" /&gt;
+        &lt;setting name="RECEIVE_DATA_COMPARISON_ENABLE" value="false" /&gt;
+        &lt;setting name="BAUDRATE_VALUE" value="19200" /&gt;
+        &lt;setting name="INT_PRIORITY_TRANSMIT_END" value="3" /&gt;
+        &lt;setting name="TRANSMIT_INTERRUPT_GENERATION_TIMING" value="0" /&gt;
+        &lt;setting name="INT_PRIORITY_RECEPTION_END" value="3" /&gt;
+        &lt;setting name="INT_PRIORITY_RECEPTION_ERROR" value="3" /&gt;
+        &lt;setting name="TRANSMIT_CALLBACK_END" value="false" /&gt;
+        &lt;setting name="ERROR_CALLBACK_USE" value="false" /&gt;
+        &lt;setting name="RECEIVE_CALLBACK_USE" value="false" /&gt;
+        &lt;setting name="EXPANSION_BIT_CALLBACK_USED" value="true" /&gt;
+        &lt;setting name="ID_MATCH_CALLBACK_USED" value="true" /&gt;
+        &lt;setting name="COMPARISON_DATA" value="0" /&gt;
+      &lt;/Both0&gt;
+    &lt;/UARTF0&gt;
+    &lt;ADC&gt;
+      &lt;setting name="ADC_USED" value="true" /&gt;
+      &lt;setting name="ADC_UNUSE" value="false" /&gt;
+      &lt;setting name="COMPARATOR_ENABLE" value="false" /&gt;
+      &lt;setting name="COMPARATOR_DISABLE" value="true" /&gt;
+      &lt;setting name="RESOLUTION_10BIT" value="true" /&gt;
+      &lt;setting name="RESOLUTION_8BIT" value="false" /&gt;
+      &lt;setting name="POSITIVE_VDD" value="true" /&gt;
+      &lt;setting name="POSITIVE_AVREFP" value="false" /&gt;
+      &lt;setting name="POSITIVE_BGR" value="false" /&gt;
+      &lt;setting name="NAGETIVE_VSS" value="true" /&gt;
+      &lt;setting name="NAGETIVE_AVREFM" value="false" /&gt;
+      &lt;setting name="TRIGGER_SOFTWARE" value="true" /&gt;
+      &lt;setting name="TRIGGER_HARDWARE_NOWAIT" value="false" /&gt;
+      &lt;setting name="TRIGGER_HARDWARE_WAIT" value="false" /&gt;
+      &lt;setting name="TRIGGER_SOURCE" value="0" /&gt;
+      &lt;setting name="CONTINUOUS_SELECT_MODE" value="true" /&gt;
+      &lt;setting name="ONESHOT_SELECT_MODE" value="false" /&gt;
+      &lt;setting name="CONTINUOUS_SCAN_MODE" value="false" /&gt;
+      &lt;setting name="ONESHOT_SCAN_MODE" value="false" /&gt;
+      &lt;setting name="ANALOG_INPUT_SELECTION" value="0" /&gt;
+      &lt;setting name="ANALOG_INPUT_16" value="false" /&gt;
+      &lt;setting name="ANALOG_INPUT_17" value="false" /&gt;
+      &lt;setting name="ANALOG_INPUT_18" value="false" /&gt;
+      &lt;setting name="ANALOG_INPUT_19" value="false" /&gt;
+      &lt;setting name="CHANNEL_SELECTION" value="0" /&gt;
+      &lt;setting name="SelectedChannelAttach" value="ANI0" /&gt;
+      &lt;setting name="CONVTIME_MODE" value="0" /&gt;
+      &lt;setting name="CONVERSION_TIME" value="3" /&gt;
+      &lt;setting name="INTERRUPT_GENERATE_CONDITION_1" value="true" /&gt;
+      &lt;setting name="INTERRUPT_GENERATE_CONDITION_2" value="false" /&gt;
+      &lt;setting name="UPPER_BOUND_VALUE" value="255" /&gt;
+      &lt;setting name="LOWER_BOUND_VALUE" value="0" /&gt;
+      &lt;setting name="INTERRUPT_USED" value="3" /&gt;
+      &lt;setting name="INTERRUPT_PRIORITY" value="true" /&gt;
+    &lt;/ADC&gt;
   &lt;/SETTING&gt;
 &lt;/RL78F12&gt;</CodeGeneratorData>
     </Extension_CodePart2>

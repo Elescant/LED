@@ -18,19 +18,19 @@
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
-* File Name    : r_cg_wdt.c
+* File Name    : r_cg_adc.c
 * Version      : CodeGenerator for RL78/F12 V2.04.01.06 [10 Nov 2017]
 * Device(s)    : R5F1096C
 * Tool-Chain   : CCRL
-* Description  : This file implements device driver for WDT module.
-* Creation Date: 2018/7/6
+* Description  : This file implements device driver for ADC module.
+* Creation Date: 2018/7/9
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
 Includes
 ***********************************************************************************************************************/
 #include "r_cg_macrodriver.h"
-#include "r_cg_wdt.h"
+#include "r_cg_adc.h"
 /* Start user code for include. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
 #include "r_cg_userdefine.h"
@@ -48,30 +48,89 @@ Global variables and functions
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
-* Function Name: R_WDT_Create
-* Description  : This function initializes the watchdogtimer.
+* Function Name: R_ADC_Create
+* Description  : This function initializes the AD converter.
 * Arguments    : None
 * Return Value : None
 ***********************************************************************************************************************/
-void R_WDT_Create(void)
+void R_ADC_Create(void)
 {
-    WDTIMK = 1U;    /* disable INTWDTI interrupt */
-    WDTIIF = 0U;    /* clear INTWDTI interrupt flag */
-    /* Set INTWDTI low priority */
-    WDTIPR1 = 1U;
-    WDTIPR0 = 1U;
-    WDTIMK = 0U;    /* enable INTWDTI interrupt */
+    ADCEN = 1U;  /* supply AD clock */
+    ADM0 = _00_AD_ADM0_INITIALVALUE;  /* disable AD conversion and clear ADM0 register */
+    ADMK = 1U;  /* disable INTAD interrupt */
+    ADIF = 0U;  /* clear INTAD interrupt flag */
+    /* Set INTAD low priority */
+    ADPR1 = 1U;
+    ADPR0 = 1U;
+    /* The reset status of ADPC is analog input, so it's unnecessary to set. */
+    /* Set ANI0 - ANI2 pin as analog input */
+    PM2 |= 0x07U;
+    ADM0 = _18_AD_CONVERSION_CLOCK_8 | _00_AD_TIME_MODE_NORMAL_1 | _00_AD_OPERMODE_SELECT;
+    ADM1 = _00_AD_TRIGGER_SOFTWARE | _00_AD_CONVMODE_CONSELECT;
+    ADM2 = _00_AD_POSITIVE_VDD | _00_AD_NEGATIVE_VSS | _00_AD_AREA_MODE_1 | _00_AD_RESOLUTION_10BIT; 
+    ADUL = _FF_AD_ADUL_VALUE;
+    ADLL = _00_AD_ADLL_VALUE;
+    ADS = _00_AD_INPUT_CHANNEL_0;
 }
 
 /***********************************************************************************************************************
-* Function Name: R_WDT_Restart
-* Description  : This function restarts the watchdog timer.
+* Function Name: R_ADC_Start
+* Description  : This function starts the AD converter.
 * Arguments    : None
 * Return Value : None
 ***********************************************************************************************************************/
-void R_WDT_Restart(void)
+void R_ADC_Start(void)
 {
-    WDTE = 0xACU;     /* restart watchdog timer */
+    ADIF = 0U;  /* clear INTAD interrupt flag */
+    ADMK = 0U;  /* enable INTAD interrupt */
+    ADCS = 1U;  /* enable AD conversion */
+}
+
+/***********************************************************************************************************************
+* Function Name: R_ADC_Stop
+* Description  : This function stops the AD converter.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+void R_ADC_Stop(void)
+{
+    ADCS = 0U;  /* disable AD conversion */
+    ADMK = 1U;  /* disable INTAD interrupt */
+    ADIF = 0U;  /* clear INTAD interrupt flag */
+}
+
+/***********************************************************************************************************************
+* Function Name: R_ADC_Set_OperationOn
+* Description  : This function enables comparator operation.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+void R_ADC_Set_OperationOn(void)
+{
+    ADCE = 1U;  /* enable AD comparator */
+}
+
+/***********************************************************************************************************************
+* Function Name: R_ADC_Set_OperationOff
+* Description  : This function stops comparator operation.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+void R_ADC_Set_OperationOff(void)
+{
+    ADCE = 0U;  /* disable AD comparator */
+}
+
+/***********************************************************************************************************************
+* Function Name: R_ADC_Get_Result
+* Description  : This function returns the conversion result in the buffer.
+* Arguments    : buffer -
+*                    the address where to write the conversion result
+* Return Value : None
+***********************************************************************************************************************/
+void R_ADC_Get_Result(uint16_t * const buffer)
+{
+    *buffer = (uint16_t)(ADCR >> 6U);
 }
 
 /* Start user code for adding. Do not edit comment generated here */

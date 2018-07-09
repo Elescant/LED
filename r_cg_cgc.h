@@ -23,7 +23,7 @@
 * Device(s)    : R5F1096C
 * Tool-Chain   : CCRL
 * Description  : This file implements device driver for CGC module.
-* Creation Date: 2018/6/21
+* Creation Date: 2018/7/9
 ***********************************************************************************************************************/
 
 #ifndef CGC_H
