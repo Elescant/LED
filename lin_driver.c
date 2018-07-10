@@ -27,12 +27,13 @@ void rec_hanlde(void)
 
     if (headfg != 0)
     {
-        UF0STR |= 0x0800;
+        UF0STC |= 0x0800;
         pid = UF0ID;
         switch (pid)
         {
         case 0x08:
             lin_slave_receive(8);
+	    
             break;
         case 0xC1:
             lin_slave_transmit(testdata, 8);
@@ -67,12 +68,14 @@ void lin_slave_receive(uint16_t len)
 uint8_t get_rxdata(uint8_t *buf)
 {
     uint16_t i, num;
-    uint16_t data_addr;
+    uint8_t *data_addr;
 
     num = UF0BUCTL & 0x000F;
+    data_addr = (uint8_t *)(&UF0BUF0);
+    
     for (i = 0; i < num; i++)
     {
-        buf[i] = (*((uint8_t *)(UF0BUF0 + i)));
+        buf[i] = *(data_addr + i);
     }
     return buf[2];
 }
@@ -80,15 +83,14 @@ uint8_t get_rxdata(uint8_t *buf)
 void lin_slave_transmit(uint8_t *txdata, uint16_t len)
 {
     uint16_t i;
-    uint16_t data_addr;
-    data_addr = UF0BUF0;
+    uint8_t *data_addr;
+    data_addr = (uint8_t *)(&UF0BUF0);
     for (i = 0; i < len; i++)
     {
-        *((uint8_t *)data_addr + i) = txdata[i];
+        *(data_addr + i) = txdata[i];
     }
     UF0BUCTL = 0x0290; //UF0TW=1,UF0ECS=1,Enhanced checksum UF0TRQ=1:start
     UF0BUCTL |= len;
-    UF0BUCTL |= _0010_UARTF_BUFFER_TRAN_START_REQUEST;
 }
 
 void lin_slave_noresponse(void)
@@ -99,8 +101,9 @@ void lin_slave_noresponse(void)
 void clr_buf(void)
 {
     uint8_t i;
+    uint8_t *bufaddr = (uint8_t *)(&UF0BUF0);
     for (i = 0; i < 9; i++)
     {
-       *((uint8_t *)(UF0BUF0 + i)) = 0U;
+       *(bufaddr + i) = 0U;
     }
 }

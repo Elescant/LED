@@ -24,24 +24,26 @@
         <Path>r_cg_port.c</Path>
         <Path>r_cg_port_user.c</Path>
         <Path>r_cg_port.h</Path>
-        <Path>r_cg_serial.c</Path>
-        <Path>r_cg_serial_user.c</Path>
-        <Path>r_cg_serial.h</Path>
         <Path>r_cg_adc.c</Path>
         <Path>r_cg_adc_user.c</Path>
         <Path>r_cg_adc.h</Path>
+        <Path>r_cg_serial.c</Path>
+        <Path>r_cg_serial_user.c</Path>
+        <Path>r_cg_serial.h</Path>
       </Category>
       <Category Name="Src">
         <Path>sys.c</Path>
         <Path>lin_bus.c</Path>
         <Path>lin_driver.c</Path>
         <Path>m_key.c</Path>
+        <Path>task.c</Path>
       </Category>
       <Category Name="Inc">
         <Path>sys.h</Path>
         <Path>lin_bus.h</Path>
         <Path>lin_driver.h</Path>
         <Path>m_key.h</Path>
+        <Path>task.h</Path>
       </Category>
     </Files>
     <Device Series="RL78">R5F1096C</Device>
@@ -59,13 +61,14 @@
           <Path>DefaultBuild\r_cg_port.obj</Path>
           <Path>DefaultBuild\r_cg_port_user.obj</Path>
           <Path>DefaultBuild\sys.obj</Path>
-          <Path>DefaultBuild\r_cg_serial.obj</Path>
-          <Path>DefaultBuild\r_cg_serial_user.obj</Path>
           <Path>DefaultBuild\lin_bus.obj</Path>
           <Path>DefaultBuild\lin_driver.obj</Path>
           <Path>DefaultBuild\r_cg_adc.obj</Path>
           <Path>DefaultBuild\r_cg_adc_user.obj</Path>
           <Path>DefaultBuild\m_key.obj</Path>
+          <Path>DefaultBuild\r_cg_serial.obj</Path>
+          <Path>DefaultBuild\r_cg_serial_user.obj</Path>
+          <Path>DefaultBuild\task.obj</Path>
         </LinkOrder>
         <CommonOptions>
           <IncludePathForC>.</IncludePathForC>

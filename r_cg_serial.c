@@ -57,46 +57,6 @@ volatile uint8_t  * gp_uartf0_rx_address;       /* uartf0 receive data address *
 volatile uint16_t   g_uartf0_rx_cnt;            /* uartf0 receive data number */
 volatile uint16_t   g_uartf0_rx_len;            /* uartf0 receive data length */
 /* Start user code for global. Do not edit comment generated here */
-// void R_UARTF0_Create(void)
-// {
-//     UF0EN = 1U;
-//     UF0CTL0 &= (uint8_t)(~_40_UARTF_TRANSMISSION_ENABLE & ~_20_UARTF_RECEPTION_ENABLE);    /* disable UARTF0 operation */
-//     LTMK0 = 1U;  /* disable INTLT interrupt */
-//     LTIF0 = 0U;  /* clear INTLT interrupt flag */
-//     LRMK0 = 1U;  /* disable INTLR interrupt */
-//     LRIF0 = 0U;  /* clear INTLR interrupt flag */
-//     LSMK0 = 1U;  /* disable INTLS interrupt */
-//     LSIF0 = 0U;  /* clear INTLS interrupt flag */
-//     /* Set INTLT low priority */
-//     LTPR10 = 1U;
-//     LTPR00 = 1U;
-//     /* Set INTLR low priority */
-//     LRPR10 = 1U;
-//     LRPR00 = 1U;
-//     /* Set INTLS low priority */
-//     LSPR10 = 1U;
-//     LSPR00 = 1U;
-//     UF0CTL1 = _0000_UARTF_BASECLK_1 | _0341_UARTF0_K_VALUE;
-//     UF0OPT0 = _14_UARTF_UFNOPT0_INITIALVALUE | _00_UARTF_TRAN_DATALEVEL_NORMAL | _00_UARTF_REC_DATALEVEL_NORMAL;
-//     //UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _00_UARTF_NORMAL_MODE;
-//     UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _06_LIN_UF0MD | _01_LIN_UF0DCS | _10_LIN_UFOIPCS;
-//     UF0OPT1 |= _08_LIN_UF0ACE;
-//     UF0OPT2 = _00_UARTF_LT_INT_GENTIME_0 | _02_UARTF_DATA_NOISE_FILTER_UNUSED;
-//     UF0CTL0 = _10_UARTF_TRANSFDIR_LSB | _00_UARTF_PARITY_NONE | _02_UARTF_DATALENGTH_8BIT | _00_UARTF_STOPLENGTH_1BIT;
-//     /* Set LTXD0 pin */
-//     PM5 |= 0x02U;
-//     PMX2 = 0xFEU;
-//     /* Set LRXD0 pin */
-//     PM5 |= 0x01U;
-// }
-/* End user code. Do not edit comment generated here */
-
-/***********************************************************************************************************************
-* Function Name: R_UARTF0_Create
-* Description  : This function initializes the UARTF0 module.
-* Arguments    : None
-* Return Value : None
-***********************************************************************************************************************/
 void R_UARTF0_Create(void)
 {
     UF0EN = 1U;
@@ -118,7 +78,9 @@ void R_UARTF0_Create(void)
     LSPR00 = 1U;
     UF0CTL1 = _0000_UARTF_BASECLK_1 | _0341_UARTF0_K_VALUE;
     UF0OPT0 = _14_UARTF_UFNOPT0_INITIALVALUE | _00_UARTF_TRAN_DATALEVEL_NORMAL | _00_UARTF_REC_DATALEVEL_NORMAL;
-    UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _00_UARTF_NORMAL_MODE;
+    //UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _00_UARTF_NORMAL_MODE;
+    UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _06_LIN_UF0MD | _01_LIN_UF0DCS | _10_LIN_UFOIPCS;
+    UF0OPT1 |= _08_LIN_UF0ACE;
     UF0OPT2 = _00_UARTF_LT_INT_GENTIME_0 | _02_UARTF_DATA_NOISE_FILTER_UNUSED;
     UF0CTL0 = _10_UARTF_TRANSFDIR_LSB | _00_UARTF_PARITY_NONE | _02_UARTF_DATALENGTH_8BIT | _00_UARTF_STOPLENGTH_1BIT;
     /* Set LTXD0 pin */
@@ -127,6 +89,44 @@ void R_UARTF0_Create(void)
     /* Set LRXD0 pin */
     PM5 |= 0x01U;
 }
+/* End user code. Do not edit comment generated here */
+
+/***********************************************************************************************************************
+* Function Name: R_UARTF0_Create
+* Description  : This function initializes the UARTF0 module.
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+// void R_UARTF0_Create(void)
+// {
+//     UF0EN = 1U;
+//     UF0CTL0 &= (uint8_t)(~_40_UARTF_TRANSMISSION_ENABLE & ~_20_UARTF_RECEPTION_ENABLE);    /* disable UARTF0 operation */
+//     LTMK0 = 1U;  /* disable INTLT interrupt */
+//     LTIF0 = 0U;  /* clear INTLT interrupt flag */
+//     LRMK0 = 1U;  /* disable INTLR interrupt */
+//     LRIF0 = 0U;  /* clear INTLR interrupt flag */
+//     LSMK0 = 1U;  /* disable INTLS interrupt */
+//     LSIF0 = 0U;  /* clear INTLS interrupt flag */
+//     /* Set INTLT low priority */
+//     LTPR10 = 1U;
+//     LTPR00 = 1U;
+//     /* Set INTLR low priority */
+//     LRPR10 = 1U;
+//     LRPR00 = 1U;
+//     /* Set INTLS low priority */
+//     LSPR10 = 1U;
+//     LSPR00 = 1U;
+//     UF0CTL1 = _0000_UARTF_BASECLK_1 | _0341_UARTF0_K_VALUE;
+//     UF0OPT0 = _14_UARTF_UFNOPT0_INITIALVALUE | _00_UARTF_TRAN_DATALEVEL_NORMAL | _00_UARTF_REC_DATALEVEL_NORMAL;
+//     UF0OPT1 = _00_UARTF_EXPANSIONBIT_UNUSE | _00_UARTF_NORMAL_MODE;
+//     UF0OPT2 = _00_UARTF_LT_INT_GENTIME_0 | _02_UARTF_DATA_NOISE_FILTER_UNUSED;
+//     UF0CTL0 = _10_UARTF_TRANSFDIR_LSB | _00_UARTF_PARITY_NONE | _02_UARTF_DATALENGTH_8BIT | _00_UARTF_STOPLENGTH_1BIT;
+//     /* Set LTXD0 pin */
+//     PM5 |= 0x02U;
+//     PMX2 = 0xFEU;
+//     /* Set LRXD0 pin */
+//     PM5 |= 0x01U;
+// }
 
 /***********************************************************************************************************************
 * Function Name: R_UARTF0_Start

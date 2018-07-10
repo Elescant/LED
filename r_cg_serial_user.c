@@ -66,6 +66,7 @@ extern volatile uint16_t   g_uartf0_rx_len;         /* uartf0 receive data lengt
 * Arguments    : None
 * Return Value : None
 ***********************************************************************************************************************/
+/*
 static void __near r_uartf0_interrupt_receive(void)
 {
     volatile uint8_t rx_data_8;
@@ -79,7 +80,7 @@ static void __near r_uartf0_interrupt_receive(void)
         g_uartf0_rx_cnt++;
     }
 }
-
+*/
 /***********************************************************************************************************************
 * Function Name: r_uartf0_interrupt_send
 * Description  : This function is INTLT interrupt service routine.
@@ -138,11 +139,11 @@ static void __near r_uartf0_interrupt_error(void)
 }
 
 /* Start user code for adding. Do not edit comment generated here */
-/*static void __near r_uartf0_interrupt_receive(void)
+static void __near r_uartf0_interrupt_receive(void)
 {
     volatile uint8_t rx_data_8;
     
     rx_data_8 = UF0RXB;
     rec_hanlde();
-}*/
+}
 /* End user code. Do not edit comment generated here */

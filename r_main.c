@@ -89,7 +89,7 @@ void main(void)
     {
         NOP();
     }
-    R_ADC_Start();
+    //R_ADC_Start();
     sys_add_task(test_task,TASK_20MS,TASK_20MS);
     while (1U)
     {
